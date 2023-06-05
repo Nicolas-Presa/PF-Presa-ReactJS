@@ -1,0 +1,14 @@
+.NavBar{
+    display: flex;
+    justify-content: space-between;
+}
+
+li{
+    display: inline-block;
+    margin: 1rem;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: rgb(170, 168, 168);
+}
