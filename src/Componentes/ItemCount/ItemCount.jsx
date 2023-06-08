@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import "./ItemCount.css"
 
-const ItemCount = ({inicial, stock}) => {
+const ItemCount = ({inicial, stock, funcionAgregar}) => {
     const [contador, setContador] = useState(1);
     const [color, setColor] = useState("black");
 
@@ -32,7 +32,7 @@ const ItemCount = ({inicial, stock}) => {
             <strong style={{color: color}}> {contador} </strong>
             <button onClick={ disminuirContador }> - </button>
             
-            <button> Agregar Al Carrito </button>
+            <button onClick={ () => funcionAgregar(contador) }> Agregar Al Carrito </button>
         </div>
     )
 }

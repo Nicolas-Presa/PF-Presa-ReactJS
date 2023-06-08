@@ -5,25 +5,25 @@ import { NavLink, Link } from "react-router-dom"
 const NavBar = () => {
     return (
     <header>
-        <Link to={"/"}>
+        <Link className="titulo" to={"/"}>
             <h1>Good Drink</h1>
         </Link>
 
     <nav>
-        <ul>
+        <ul className="NavBar">
             <li>
-                <NavLink to={`/categoria/1`}> Bebida Blanca </NavLink>
+                <NavLink className="navLink" to={`/categoria/1`}> Bebida Blanca </NavLink>
             </li>
             <li>
-                <NavLink to={`/categoria/2`}> Cervezas </NavLink>
+                <NavLink className="navLink" to={`/categoria/2`}> Cervezas </NavLink>
             </li>
             <li>
-                <NavLink to={`/categoria/3`}> Clasicos </NavLink>
+                <NavLink className="navLink" to={`/categoria/3`}> Clasicos </NavLink>
             </li>
         </ul>
+            <CartWidget />
         </nav>
 
-        <CartWidget />
         
 
     </header>
