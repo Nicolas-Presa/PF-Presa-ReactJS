@@ -2,6 +2,7 @@ import './App.css';
 import NavBar from './Componentes/NavBar/NavBar';
 import ItemListContainer from './Componentes/ItemListContainer/ItemListContainer';
 import Cart from './Componentes/Cart/Cart';
+import Checkout from './Componentes/Checkout/Checkout';
 import ItemDetailContainer from './Componentes/ItemDetailContainer/ItemDetailContainer';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { CarritoProvider } from './Context/CarritoContext';
@@ -19,6 +20,7 @@ function App() {
         <Route path='/item/:idItem' element= { <ItemDetailContainer/> } />
         <Route path='*' element={<h2>Sitio en Contruccion</h2>} />
         <Route path='/cart' element={ <Cart /> } />
+        <Route path='/checkout' element={ <Checkout /> } />
       </Routes>
 
       </CarritoProvider>
