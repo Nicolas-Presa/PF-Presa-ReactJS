@@ -7,6 +7,7 @@ import "./Checkout.css";
 const Checkout = () => {
 
     const { carrito, vaciarCarrito, total } = useContext(CarritoContext);
+    console.log(carrito)
     const [nombre, setNombre] = useState("");
     const [apellido, setApellido] = useState("");
     const [telefono, setTelefono] = useState("");
@@ -17,13 +18,13 @@ const Checkout = () => {
 
     const manejadorFormulario = (event) => {
         event.preventDefault();
-        
-        if(!nombre || !apellido || !telefono || !email || !emailConfirmacion) {
+
+        if (!nombre || !apellido || !telefono || !email || !emailConfirmacion) {
             setError("Por favor complete todos los campos");
             return;
         }
 
-        if(email !== emailConfirmacion) {
+        if (email !== emailConfirmacion) {
             setError("Los campos del email no coinciden");
             return;
         }
@@ -32,7 +33,7 @@ const Checkout = () => {
             items: carrito.map(producto => ({
                 id: producto.item.id,
                 nombre: producto.item.nombre,
-                cantidad: producto.item.cantidad
+                cantidad: producto.cantidad
             })),
             total: carrito.reduce((total, producto) => total + producto.item.precio * producto.cantidad, 0),
             nombre,
@@ -42,79 +43,75 @@ const Checkout = () => {
             fecha: new Date(),
         };
 
-        Promise.all(
-            orden.items.map(async(productoOrden) => {
-                const productoRef = doc(db, "Inventario", productoOrden.id);
-                const productoDoc = await getDoc(productoRef);
-                const stockActual = productoDoc.data().stock;
-                await updateDoc(productoRef, {
-                    stock: stockActual - productoOrden.cantidad,
-                });
-            })
-        )
-        .then(() => {
-            addDoc(collection(db, "ordenes"), orden)
+        
+        addDoc(collection(db, "ordenes"), orden)
             .then((docRef) => {
+                carrito.forEach((prod) => {
+                    const docRef = doc(db, 'Inventario', prod.item.id)
+                    getDoc(docRef)
+                        .then((dbDoc) => {
+                            updateDoc(docRef, { stock: dbDoc.data().stock - prod.cantidad })
+                        })
+                })
+
                 setOrdenId(docRef.id);
                 vaciarCarrito();
             })
+
             .catch((error) => {
                 console.error("Error al crear la orden", error);
                 setError("Se produjo un error al crear la orden");
             })
-        })
-        .catch((error) => {
-            console.error("error al actualizar el stock", error);
-            setError("Se produjo un error al actualizar el stock de los productos");
-        })
+
+
     }
 
 
     return (
         <div>
-            <h2>Checkout</h2>
-            <form onSubmit={ manejadorFormulario }>
-                {carrito.map(producto =>(
-                    <div key={producto.item.id}>
-                        <p>
+            <h2 className="titulo">Checkout</h2>
+            <form onSubmit={manejadorFormulario}>
+                {carrito.map(producto => (
+                    <div className="item" key={producto.item.id}>
+                        <p className="item">
                             {producto.item.nombre} x {producto.cantidad}
                         </p>
-                        <p>Precio: ${producto.item.precio} </p>
+                        <p className="item">Precio: ${producto.item.precio} </p>
                         <hr />
-                    </div>  
+                    </div>
                 ))}
                 <hr />
-                <p>Tota de compra: $ {total} </p>
+                <p className="item">Tota de compra: $ {total} </p>
                 <hr />
                 <hr />
                 <br />
-                <div>
+                <div className="form">
                     <label htmlFor=""> Nombre </label>
                     <input type="text" value={nombre} onChange={(e) => setNombre(e.target.value)} />
                 </div>
 
-                <div>
+                <div className="form">
                     <label htmlFor=""> Apellido </label>
                     <input type="text" value={apellido} onChange={(e) => setApellido(e.target.value)} />
                 </div>
 
-                <div>
+                <div className="form">
                     <label htmlFor=""> Telefono </label>
                     <input type="text" value={telefono} onChange={(e) => setTelefono(e.target.value)} />
                 </div>
 
-                <div>
+                <div className="form">
                     <label htmlFor=""> Email </label>
                     <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
                 </div>
 
-                <div>
+                <div className="form">
                     <label htmlFor=""> Email Confirmacion </label>
                     <input type="email" value={emailConfirmacion} onChange={(e) => setEmailConfirmacion(e.target.value)} />
                 </div>
 
-                {error && <p style={{color: "red"}}> {error} </p>}
-                <button type="submit"> Finalizar Compra </button>
+                {error && <p style={{ color: "red" }}> {error} </p>}
+                <button type="submit" className="boton__finalizar__compra"> Finalizar Compra </button>
             </form>
             {
                 ordenID && (

@@ -20,8 +20,8 @@ const NavBar = () => {
             <li>
                 <NavLink className="navLink" to={`/categoria/3`}> Clasicos </NavLink>
             </li>
-        </ul>
             <CartWidget />
+        </ul>
         </nav>
 
         

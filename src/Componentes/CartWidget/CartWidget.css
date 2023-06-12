@@ -1,3 +1,10 @@
 .carrito{
     width: 100px;
 }
+
+span{
+    font-size: 30px;
+    text-decoration: none;
+    padding: 10px;
+    color: black;
+}

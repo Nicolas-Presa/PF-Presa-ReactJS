@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import ItemList from '../ItemList/ItemList'
-//import { getProductos, getProductosPorCategoria } from '../../asyncmock'
 import { useParams } from 'react-router-dom'
 import { collection, getDocs, where, query } from 'firebase/firestore';
 import { db } from '../../Services/Config';
@@ -27,16 +26,6 @@ const ItemListContainer = ({ greeting }) => {
         .catch(error => console.log(error))
 
     }, [idCategoria])
-
-/*    useEffect(() => {
-
-        const funcionProductos = idCategoria ? getProductosPorCategoria : getProductos;
-
-        funcionProductos(idCategoria)
-            .then(res => setProductos(res))
-            .catch(error => console.error(error))
-    }, [idCategoria])
-    */
 
     return (
         <>

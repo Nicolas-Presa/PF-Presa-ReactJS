@@ -1,0 +1,31 @@
+.cart2{
+    margin: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.cart2__total{
+    text-decoration: double underline;
+}
+
+.cart2__cantidad{
+    text-decoration: double underline;
+}
+
+.cart2__boton__vaciar{
+    background-color: black;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.cart2__boton__finalizar{
+    background-color: black;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+}
+
